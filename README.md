@@ -1,6 +1,8 @@
-# generator-faraday [![Build Status](https://secure.travis-ci.org/evturn/generator-faraday.png?branch=master)](https://travis-ci.org/evturn/generator-faraday)
+# generator-faraday
 
 ### Generator for the 20th Century
+
+![alt tag](https://raw.github.com/evturn/generator-faraday/master/test/celery-man.gif)
 
 > [Yeoman](http://yeoman.io) generator
 
