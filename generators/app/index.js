@@ -1,4 +1,5 @@
 var generators = require('yeoman-generator');
+var _ = require('lodash');
 
 module.exports = generators.Base.extend({
 
@@ -6,10 +7,16 @@ module.exports = generators.Base.extend({
 
     generators.Base.apply(this, arguments);
 
+    this.argument('appname', {
+      type     : String,
+      required : true
+
+    });
+    this.appname = _.camelCase(this.appname);
+
+
     this.option('less');
-    this.option('gulp');
-    this.option('handlebars');
-    this.option('babel');
+    this.scriptSuffix = (this.options.less ? ".less" : ".css");
   },
 
   method1: function() {
