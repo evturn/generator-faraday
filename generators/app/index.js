@@ -42,6 +42,10 @@ module.exports = generators.Base.extend({
       done();
 
     }.bind(this));
+  },
+
+  logError: function() {
+    this.log('I think I ate something funny.');
   }
 
 });
