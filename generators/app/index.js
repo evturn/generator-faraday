@@ -1,51 +1,57 @@
-var generators = require('yeoman-generator');
-var _ = require('lodash');
+'use strict';
+var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
+var yosay = require('yosay');
 
-module.exports = generators.Base.extend({
-
-  constructor: function() {
-
-    generators.Base.apply(this, arguments);
-
-    this.argument('appname', {
-      type     : String,
-      required : true
-
-    });
-    this.appname = _.camelCase(this.appname);
-
-
-    this.option('less');
-    this.scriptSuffix = (this.options.less ? ".less" : ".css");
-  },
-
-  method1: function() {
-    console.log('method 1');
-  },
-
-  method2: function() {
-    console.log('method 2');
-  },
-
+module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    this.prompt({
-      type    : 'input',
-      name    : 'name',
-      message : 'Project name',
-      default : this.appname
+    // Have Yeoman greet the user.
+    this.log(yosay(
+      'Welcome to the tremendous ' + chalk.red('Faraday') + ' generator!'
+    ));
 
-    }, function (answers) {
+    var prompts = [{
+      type: 'confirm',
+      name: 'someOption',
+      message: 'Would you like to enable this option?',
+      default: true
+    }];
 
-      this.log(answers.name);
+    this.prompt(prompts, function (props) {
+      this.props = props;
+      // To access props later use this.props.someOption;
+
       done();
-
     }.bind(this));
   },
 
-  logError: function() {
-    this.log('I think I ate something funny.');
-  }
+  writing: {
+    app: function () {
+      this.fs.copy(
+        this.templatePath('_package.json'),
+        this.destinationPath('package.json')
+      );
+      this.fs.copy(
+        this.templatePath('_bower.json'),
+        this.destinationPath('bower.json')
+      );
+    },
 
+    projectfiles: function () {
+      this.fs.copy(
+        this.templatePath('editorconfig'),
+        this.destinationPath('.editorconfig')
+      );
+      this.fs.copy(
+        this.templatePath('jshintrc'),
+        this.destinationPath('.jshintrc')
+      );
+    }
+  },
+
+  install: function () {
+    this.installDependencies();
+  }
 });
